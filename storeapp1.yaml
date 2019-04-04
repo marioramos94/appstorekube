@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: storeapp1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: storeapp1
+  template:
+    metadata:
+      labels:
+        app: storeapp1
+    spec:
+      containers:
+      - name: storeapp1
+        image: mariors94/storeapp:4.0
+        ports:
+        - name: http 
+          containerPort: 5000
+           
+       
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: storeapp1
+spec:
+  selector:
+    app: storeapp1
+  ports:
+  - protocol: TCP
+    targetPort: http
+    port: 80
+  type: NodePort
